@@ -1,0 +1,171 @@
+@model MvcUser.Models.UserPageModel
+
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>User</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit"  enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PassWord" class="control-label"></label>
+                <input asp-for="PassWord" class="form-control" />
+                <span asp-validation-for="PassWord" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @* asp-for是指定表达式名称生成的id和name *@
+                @* 是根据模型来设置html的类型 *@
+                @* labei是为表达试生成标签标题和属性 *@
+                <label asp-for="Gender" class="control-label"></label>
+                @* input是模型来生成对应的文本框 *@
+                男<input asp-for="Gender" type="radio" value="男" />
+                女<input asp-for="Gender" type="radio" value="女" />
+                @* span是在客户端发生验证错误时会显示的错误信息 *@
+                @* data-valmsg-for="property属性会在字段中显示错误的信息 *@
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Age" class="control-label"></label>
+                <input asp-for="Age" class="form-control" />
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Provinces" class="control-label"></label>
+                <select asp-for="Provinces" class="form-control">
+                    <option>请选择</option>
+                    <option>广东省</option>
+                    <option>贵州省</option>
+                    <option>辽宁省</option>
+                </select>
+                <span asp-validation-for="Provinces" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <select asp-for="City" class="form-control"></select>
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+
+                <input asp-for="Image" type="file" class="form-control" />
+
+                <span asp-validation-for="Image" class="text-danger"></span>
+                <br />
+                <img id="img" src="@Model.FileUrl" />
+                <br />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Url" class="control-label"></label>
+                <input asp-for="Url" class="form-control" />
+                <span asp-validation-for="Url" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+            <input type="hidden" asp-for="City" id="hidCity" />
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+} 
+
+
+
+
+<script>
+    function test(){
+        return false;
+    }
+    var data = [{
+        Provinces: "广东省",
+        cities: ["深圳市", "东莞市", "潮汕市", "中山市", "广州市"]
+    },
+    {
+        Provinces: "贵州省",
+        cities: ["都匀市", "遵义市", "独山市", "瓮安市", "贵阳市"]
+    },
+    {
+        Provinces: "辽宁省",
+        cities: ["沈阳市", "大连市", "铁岭市", "丹东市", "锦州市"]
+    }]
+
+
+    var sf = document.querySelector("#Provinces");
+    var cityBox = document.querySelector("#City");
+    var cityHid = document.querySelector("#hidCity").value;
+    var imgBox = document.getElementById('Image');
+    var img = document.getElementById('img');
+
+    // addEventListener向元素添加事件
+    imgBox.addEventListener("change", function () {
+        //FileReader可以获取文件中的数据
+        var reader = new FileReader();
+        //获取文件内容以url形式表示
+        reader.readAsDataURL(imgBox.files[0]);
+        reader.onload = function () {
+            //赋值给img
+            img.src = this.result
+        }
+    })
+    if (sf.value == "广东省" || sf.value == "贵州省" || sf.value == "辽宁省")
+    {
+        var cityData;
+        if (sf.value == "广东省") {
+            cityData = data[0].cities;
+        }
+        if (sf.value == "贵州省") {
+            cityData = data[1].cities;
+        }
+        if (sf.value == "辽宁省") {
+            cityData = data[2].cities;
+        }
+        for (var i = 0; i < cityData.length; i++) {
+            var city = cityData[i];
+            var opt = document.createElement("option");
+            opt.value = city;
+            opt.text = city;
+            if (city == cityHid) {
+                opt.setAttribute("selected", true);
+            }
+            cityBox.appendChild(opt);
+        }
+    }
+    sf.onchange = function() {
+        cityBox.innerHTML = "";
+        var Citydata;
+        if (sf.value == "广东省") {
+            Citydata = data[0].cities;
+        }
+        if (sf.value == "贵州省") {
+            Citydata = data[1].cities;
+        }
+        if (sf.value == "辽宁省") {
+            Citydata = data[2].cities;
+        }
+        for (var j = 0; j < Citydata.length; j++) {
+            var citys = Citydata[j];
+            var opt = document.createElement("option");
+            opt.value = citys;
+            opt.text = citys;
+
+            cityBox.appendChild(opt);
+        }
+    }
+
+</script>
