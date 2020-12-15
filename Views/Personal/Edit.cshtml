@@ -1,6 +1,7 @@
 @model MvcUser.Models.UserPageModel
 
 
+
 @{
     ViewData["Title"] = "Edit";
 }
@@ -43,18 +44,14 @@
             </div>
             <div class="form-group">
                 <label asp-for="Provinces" class="control-label"></label>
-                <select asp-for="Provinces" class="form-control">
-                    <option>请选择</option>
-                    <option>广东省</option>
-                    <option>贵州省</option>
-                    <option>辽宁省</option>
-                </select>
-                <span asp-validation-for="Provinces" class="text-danger"></span>
+                <select asp-for="Provinces" asp-items="Model.ProvinceList" class="form-control"></select>
+               <span asp-validation-for="Provinces" class="text-danger"></span>
+                
             </div>
             <div class="form-group">
                 <label asp-for="City" class="control-label"></label>
-                <select asp-for="City" class="form-control"></select>
-                <span asp-validation-for="City" class="text-danger"></span>
+                <select asp-for="City" class="form-control" asp-items="Model.CityList"></select>
+               <span asp-validation-for="City" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Image" class="control-label"></label>
@@ -77,6 +74,7 @@
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
             <input type="hidden" asp-for="City" id="hidCity" />
+           
         </form>
     </div>
 </div>
@@ -84,33 +82,40 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 } 
-
-
-
-
 <script>
-    function test(){
-        return false;
-    }
-    var data = [{
-        Provinces: "广东省",
-        cities: ["深圳市", "东莞市", "潮汕市", "中山市", "广州市"]
-    },
-    {
-        Provinces: "贵州省",
-        cities: ["都匀市", "遵义市", "独山市", "瓮安市", "贵阳市"]
-    },
-    {
-        Provinces: "辽宁省",
-        cities: ["沈阳市", "大连市", "铁岭市", "丹东市", "锦州市"]
-    }]
-
-
-    var sf = document.querySelector("#Provinces");
-    var cityBox = document.querySelector("#City");
-    var cityHid = document.querySelector("#hidCity").value;
     var imgBox = document.getElementById('Image');
     var img = document.getElementById('img');
+    var province=document.getElementById('Provinces');
+     var city = 'https://localhost:5001/Province/GetCity';
+    province.onchange = function () {
+
+                var index = province.selectedIndex;
+                var value = province.options[index].value;
+                fetch(city + '?parentid=' + value, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                })
+                    .then((res) => {
+                        return res.json()
+                    })
+                    .then((data) => {
+                        console.log(data);
+                        var cities = document.getElementById('City')
+                        if (cities.value != "") {
+                            cities.innerHTML = "";
+                        }
+                        if (data != null) {
+                            for (var i = 0; i < data.length; i++) {
+                                var op = new Option(data[i].name, data[i].id)
+                                cities.options.add(op);
+                            }
+
+                        }
+                    })
+            }
 
     // addEventListener向元素添加事件
     imgBox.addEventListener("change", function () {
@@ -123,49 +128,6 @@
             img.src = this.result
         }
     })
-    if (sf.value == "广东省" || sf.value == "贵州省" || sf.value == "辽宁省")
-    {
-        var cityData;
-        if (sf.value == "广东省") {
-            cityData = data[0].cities;
-        }
-        if (sf.value == "贵州省") {
-            cityData = data[1].cities;
-        }
-        if (sf.value == "辽宁省") {
-            cityData = data[2].cities;
-        }
-        for (var i = 0; i < cityData.length; i++) {
-            var city = cityData[i];
-            var opt = document.createElement("option");
-            opt.value = city;
-            opt.text = city;
-            if (city == cityHid) {
-                opt.setAttribute("selected", true);
-            }
-            cityBox.appendChild(opt);
-        }
-    }
-    sf.onchange = function() {
-        cityBox.innerHTML = "";
-        var Citydata;
-        if (sf.value == "广东省") {
-            Citydata = data[0].cities;
-        }
-        if (sf.value == "贵州省") {
-            Citydata = data[1].cities;
-        }
-        if (sf.value == "辽宁省") {
-            Citydata = data[2].cities;
-        }
-        for (var j = 0; j < Citydata.length; j++) {
-            var citys = Citydata[j];
-            var opt = document.createElement("option");
-            opt.value = citys;
-            opt.text = citys;
 
-            cityBox.appendChild(opt);
-        }
-    }
-
+    
 </script>

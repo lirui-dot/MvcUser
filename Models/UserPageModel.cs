@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -38,5 +40,9 @@ namespace MvcUser.Models
         [Url]
         public string Url { get; set; }
         public string FileUrl { get; set; }
+        public List<SelectListItem> ProvinceList { get;set; } 
+        public List<SelectListItem> CityList{get;set;}
+
     }
+   
 }

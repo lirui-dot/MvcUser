@@ -1,7 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using MvcUser.Models;
 
 namespace MvcUser.Controllers
@@ -14,6 +18,9 @@ namespace MvcUser.Controllers
         {
             _context = context;
         }
+        
+
+        // GET: Personal/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             UserPageModel usermodel = new UserPageModel();
@@ -29,8 +36,31 @@ namespace MvcUser.Controllers
             usermodel.Gender = user.Gender;
             usermodel.Age = user.Age;
             usermodel.Provinces = user.Provinces;
+            usermodel.City=user.City;
             usermodel.FileUrl = "../../Image/" + Path.GetFileName(user.Image);
             usermodel.Url = user.Url;
+            var dbProvince = await _context.Provinces.Where(m => m.id < 35).ToListAsync();
+             var dbCity=await _context.Provinces.Where(m=>m.parentid==usermodel.Provinces).ToListAsync();
+            usermodel.ProvinceList=new List<SelectListItem>();
+            foreach(var item in dbProvince)
+            {
+                if(usermodel.Provinces==item.id)
+                {
+                    usermodel.ProvinceList.Add(new SelectListItem(){Value=item.id.ToString(),Text=item.name,Selected=true});
+                }
+                else
+                 usermodel.ProvinceList.Add(new SelectListItem(){Value=item.id.ToString(),Text=item.name});
+                 
+            }
+            usermodel.CityList=new List<SelectListItem>();
+            foreach (var city in dbCity)
+                    {
+                        if(usermodel.City==city.id){
+                            usermodel.CityList.Add(new SelectListItem(){Value=city.id.ToString(),Text=city.name,Selected=true});
+                        }
+                        
+                    }
+            
             if (user == null)
             {
                 return NotFound();
