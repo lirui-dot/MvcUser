@@ -1,10 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MvcUser.Models
 {
     public class Register
     {
         public int Id { get; set; }
+        [Remote(action: "NameIsExists", controller: "User")]
+       
         [Display(Name = "用户名")]
         [Required(ErrorMessage = "请输入{0}")]
         public string userName { get; set; }

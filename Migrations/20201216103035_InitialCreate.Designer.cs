@@ -9,7 +9,7 @@ using MvcUser.Models;
 namespace MvcUser.Migrations
 {
     [DbContext(typeof(UserContext))]
-    [Migration("20201214042139_InitialCreate")]
+    [Migration("20201216103035_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

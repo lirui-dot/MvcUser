@@ -150,7 +150,6 @@ E:\new vs code\MvcUser\obj\Debug\net5.0\scopedcss\bundle\MvcUser.styles.css
 E:\new vs code\MvcUser\obj\Debug\net5.0\MvcUser.TagHelpers.input.cache
 E:\new vs code\MvcUser\obj\Debug\net5.0\MvcUser.TagHelpers.output.cache
 E:\new vs code\MvcUser\obj\Debug\net5.0\MvcUser.RazorCoreGenerate.cache
-E:\new vs code\MvcUser\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
 E:\new vs code\MvcUser\obj\Debug\net5.0\Razor\Views\Home\Privacy.cshtml.g.cs
 E:\new vs code\MvcUser\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
 E:\new vs code\MvcUser\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
@@ -167,5 +166,6 @@ E:\new vs code\MvcUser\obj\Debug\net5.0\MvcUser.pdb
 E:\new vs code\MvcUser\obj\Debug\net5.0\MvcUser.genruntimeconfig.cache
 E:\new vs code\MvcUser\obj\Debug\net5.0\Razor\Views\Personal\Edit.cshtml.g.cs
 E:\new vs code\MvcUser\obj\Debug\net5.0\Razor\Views\Personal\Index.cshtml.g.cs
-E:\new vs code\MvcUser\obj\Debug\net5.0\Razor\Views\User\Index.cshtml.g.cs
+E:\new vs code\MvcUser\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
 E:\new vs code\MvcUser\obj\Debug\net5.0\Razor\Views\User\Register.cshtml.g.cs
+E:\new vs code\MvcUser\obj\Debug\net5.0\Razor\Views\User\Index.cshtml.g.cs

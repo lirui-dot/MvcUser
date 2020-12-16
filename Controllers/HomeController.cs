@@ -20,13 +20,15 @@ namespace MvcUser.Controllers
 
         public IActionResult Index()
         {
-            return View();
+             return RedirectToAction("Index", "User");
         }
+        
 
         public IActionResult Privacy()
         {
             return View();
         }
+       
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
